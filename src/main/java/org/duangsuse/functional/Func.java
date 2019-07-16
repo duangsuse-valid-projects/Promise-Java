@@ -12,20 +12,32 @@ public final class Func {
 
   @FunctionalInterface
   public static interface Func0<R> { R apply(); }
-  
+
   @FunctionalInterface
   public static interface Func1<R, I0> { R apply(I0 x0); }
   static <R, I0> Function<I0, Func0<R>> curry(Func1<R, I0> f)
+    { return (x0) -> () -> f.apply(x0); }
+  @FunctionalInterface
+  public static interface Funv1<I0> { void apply(I0 x0); }
+  static <I0> Function<I0, Runnable> curry(Funv1<I0> f)
     { return (x0) -> () -> f.apply(x0); }
 
   @FunctionalInterface
   public static interface Func2<R, I0, I1> { R apply(I0 x0, I1 x1); }
   static <R, I0, I1> Function<I0, Func1<R, I1>> curry(Func2<R, I0, I1> f)
     { return (x0) -> (x1) -> f.apply(x0, x1); }
-  
+  @FunctionalInterface
+  public static interface Funv2<I0, I1> { void apply(I0 x0, I1 x1); }
+  static <I0, I1> Function<I0, Funv1<I1>> curry(Funv2<I0, I1> f)
+    { return (x0) -> (x1) -> f.apply(x0, x1); }
+
   @FunctionalInterface
   public static interface Func3<R, I0, I1, I2> { R apply(I0 x0, I1 x1, I2 x2); }
   static <R, I0, I1, I2> Function<I0, Func2<R, I1, I2>> curry(Func3<R, I0, I1, I2> f)
+    { return (x0) -> (x1, x2) -> f.apply(x0, x1, x2); }
+  @FunctionalInterface
+  public static interface Funv3<I0, I1, I3> { void apply(I0 x0, I1 x1, I3 x3); }
+  static <I0, I1, I2> Function<I0, Funv2<I1, I2>> curry(Funv3<I0, I1, I2> f)
     { return (x0) -> (x1, x2) -> f.apply(x0, x1, x2); }
   
   @FunctionalInterface

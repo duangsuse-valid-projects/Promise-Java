@@ -58,11 +58,11 @@ public class StreamsTest {
     assert s3.next() == 7;
     assert !s3.hasNext();
   }
-  
+
   @Test public void
   foldOperator() {
     java.util.Map<String, String> translations = new java.util.HashMap<>();
-    Func.Func2<Void, String, String> $ = (k, v) -> { translations.put(k, v); return null; };
+    Func.Funv2<String, String> $ = translations::put;
     $.apply("too", "太"); $.apply("young", "年轻"); $.apply("simple", "简单"); 
     Iterator<String> parts = of("Too", " young ", "too", " simple");
     Function<String, String> translate = (s) -> translations.getOrDefault(s.trim().toLowerCase(), s);
