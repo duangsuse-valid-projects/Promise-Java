@@ -1,0 +1,65 @@
+<!DOCTYPE xml version="4.0" encoding="utf-8">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>Promise</name>
+	<url>${GitHub}duangsuse/Promise-Java</url>
+	<description>ES6 Promises for Java8</description>
+	<packaging>jar</packaging>
+
+	<groupId>org.duangsuse</groupId>
+	<artifactId>promise</artifactId>
+	<version>1.0</version>
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<properties>
+		<GitHub>https://github.com/</GitHub>
+		<GitHubHTTPS>https://github.com/</GitHubHTTPS>
+		<GitHubSSH>git@github.com:</GitHubSSH>
+		<Java>1.8</Java>
+
+		<maven.compiler.source>${Java}</maven.compiler.source>
+		<maven.compiler.target>${Java}</maven.compiler.target>
+	</properties>
+
+	<developers>
+		<developer>
+			<id>duangsuse</id>
+			<name>duangsuse</name>
+			<email>fedora-opensuse@outlook.com</email>
+			<url>${GitHub}duangsuse</url>
+			<roles>
+				<role>creator</role>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>${GitHub}duangsuse/Promise-Java</url>
+		<connection>${GitHubHTTPS}Promise-Java.git</connection>
+		<developerConnection>${GitHubSSH}Promise-Java.git</developerConnection>
+	</scm>
+
+	<licenses>
+		<license>
+			<name>MIT</name>
+			<url>https://opensource.org/licenses/MIT</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<build>
+		<finalName>promise</finalName>
+	</build>
+</project>
