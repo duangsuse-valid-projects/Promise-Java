@@ -65,7 +65,7 @@ public class StreamsTest {
   foldOperator() {
     java.util.Map<String, String> translations = new java.util.HashMap<>();
     Func.Funv2<String, String> $ = translations::put;
-    $.apply("too", "太"); $.apply("young", "年轻"); $.apply("simple", "简单"); 
+    $.invoke("too", "太"); $.invoke("young", "年轻"); $.invoke("simple", "简单"); 
     Iterator<String> parts = of("Too", " young ", "too", " simple");
     Function<String, String> translate = (s) -> translations.getOrDefault(s.trim().toLowerCase(), s);
     Iterator<String> translatedparts = Streams.map(translate, parts);
