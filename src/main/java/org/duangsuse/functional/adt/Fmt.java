@@ -26,6 +26,7 @@ public final class Fmt {
     return new Pair<String, String>(String.valueOf(desc.charAt(0)), String.valueOf(desc.charAt(2)));
   }
   static StringBuilder writer() { return new StringBuilder(); }
+  static StringBuilder writer(String init) { return new StringBuilder(init); }
   /** Remove last N characters from end of a {@link java.lang.StringBuilder}, do nothing if {@code n > sb.length()} */
   static void deleteLastN(StringBuilder sb, int n) {
     if (sb.length() < n) return;
