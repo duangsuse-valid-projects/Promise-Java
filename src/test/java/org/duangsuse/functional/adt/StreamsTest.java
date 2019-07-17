@@ -1,6 +1,8 @@
 package org.duangsuse.functional.adt;
 
 import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.Arrays;
 import java.util.function.Function;
 
 import static org.junit.Assert.*;
@@ -70,5 +72,62 @@ public class StreamsTest {
     StringBuilder translated = fold((sb, x) -> sb.append(x).append(" "), new StringBuilder(), translatedparts);
     Fmt.deleteLastN(translated, 1);
     assertEquals("太 年轻 太 简单", translated.toString());
+  }
+
+  @Test public void
+  doubleEnded() {
+    ListIterator<String> strs = makeDoubleEnded(Arrays.asList(new String[] {"a", "b", "c"}));
+    Streams.ArrayIter<String> strs1 = of("a,b,c".split(","));
+    assertArrayEquals("a,b,c".split(","), collect(strs1).toArray());
+    Object[] ary0 = collect(strs).toArray();
+    strs1.reset();
+    Runnable check = () -> assertArrayEquals(ary0, collect(strs1).toArray());
+    check.run();
+    assert strs.hasPrevious();
+    assertEquals("c", strs1.getLast());
+    assertEquals("b", strs1.previous());
+    assertEquals("a", strs1.previous());
+    assertEquals("a", strs1.peekNext());
+    check.run();
+    while (strs.hasPrevious()) strs.previous();
+    assert strs1.calculateLength() == 3;
+    assert strs1.hasPrevious();
+    strs1.reset();
+    check.run();
+    strs1.reset(); // p-1, 0
+    assertEquals("a", strs1.getLast()); // p-1, 0
+    assertEquals("a", strs1.getLast()); // p-1, 0
+    strs1.moveNext(); // p0, 1
+    assertEquals("b", strs1.getLast()); // p0, 1, +1, get
+    assertEquals("b", strs1.next()); // p0->p1, 1, ++, gets
+    strs1.movePrevious();
+    assertEquals("b", strs1.getLast());
+    assertEquals("b", strs1.peekNext());
+    strs1.setLast(".");
+    assertEquals(3, strs1.calculateLength());
+    assertEquals(".", strs1.getLast());
+  }
+  @Test public void
+  arrayIter() {
+    ArrayIter<String> 蛤 = Streams.of("小熊维尼", "红孩儿");
+    蛤.reset();
+    蛤.moveNext();
+    蛤.setLast("?你太美");
+    蛤.movePrevious();
+    assertEquals(2, 蛤.calculateLength());
+    assert 蛤.hasNext();
+    assertEquals("小熊维尼", 蛤.next());
+    assertEquals("?你太美", 蛤.next());
+    assertEquals("?你太美", 蛤.getLast());
+    assert !蛤.hasNext();
+    蛤.reset();
+    assert 蛤.next().endsWith("尼");
+    蛤.mapRemaining((s) -> s.replace("?", "鸡"));
+    蛤.reset(); 蛤.moveNextN(2);
+
+    assertEquals("鸡你太美", 蛤.getLast()); // oh babe
+    蛤.reset();
+
+    assertArrayEquals(new String[] {"小熊维尼", "鸡你太美"}, collect2Ary(蛤, String[].class));
   }
 }
